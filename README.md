@@ -5,6 +5,27 @@ A comprehensive **Library Management System** built using **Java Swing** and **M
 This project demonstrates **database integration, authentication systems, and multi-role dashboards** using Java.
 
 ---
+## 📌 Project Description
+
+This **Library Management System** was developed as a **2nd Year End Semester Project for Java**.
+The project was designed and implemented collaboratively by a team of four students:
+
+* **Takunda Leonard Gorogodo**
+* **Budwell K Nyamhamba**
+* **Lokesh Karri**
+* **Abi Lash**
+
+The goal of the project was to apply core concepts of **Java, Object-Oriented Programming, GUI development using Java Swing, and database integration with MySQL** to build a real-world application.
+
+It showcases practical implementation of:
+
+* Multi-user role-based systems
+* Database connectivity using JDBC
+* User authentication and authorization
+* Modular and structured application design
+
+This project reflects teamwork, problem-solving, and the ability to build a complete functional system from concept to implementation.
+
 
 ## 🚀 Features
 
