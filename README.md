@@ -237,7 +237,7 @@ CREATE TABLE seat_reservation (
 ### Steps
 
 ```bash id="run1"
-git clone https://github.com/your-username/LibraryManagementSystem.git
+git clone https://github.com/takundagorogodo/LibraryManagementSystem.git
 cd LibraryManagementSystem
 ```
 
