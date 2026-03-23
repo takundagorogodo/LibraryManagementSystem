@@ -127,19 +127,19 @@ public class MainFaculty extends javax.swing.JFrame {
          ProfileFaculty pf = new ProfileFaculty(facultyId);
     pf.setVisible(true);    
     this.dispose();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+
+    }//
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
           
       SearchBooksFaculty sbs = new SearchBooksFaculty("FACULTY", facultyId);
     sbs.setVisible(true);
 this.dispose();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+
+    }//
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+      
         int choice = JOptionPane.showConfirmDialog(
     this,
     "Are you sure you want to go back?",
@@ -155,7 +155,7 @@ if (choice == JOptionPane.YES_OPTION) {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
                                        
-    // Step 1: Ask for current password
+   
     String currentPassword = JOptionPane.showInputDialog(
         this, 
         "Enter your current password:",
@@ -168,13 +168,12 @@ if (choice == JOptionPane.YES_OPTION) {
         return;
     }
     
-    // Step 2: Verify current password
+    /
     try {
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        
-        // Connect to database
+       
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/library_db?useSSL=false&serverTimezone=UTC",
@@ -182,8 +181,6 @@ if (choice == JOptionPane.YES_OPTION) {
             "1234"
         );
         
-        // First check if facultyId is actually user_id (most common case)
-        // Try to find user with this ID and correct password
         pst = conn.prepareStatement(
             "SELECT user_id FROM users WHERE user_id = ? AND password = ? AND role = 'FACULTY'"
         );
@@ -280,7 +277,6 @@ if (choice == JOptionPane.YES_OPTION) {
             );
         }
         
-        // Close resources
         if (rs != null) rs.close();
         if (pst != null) pst.close();
         if (conn != null) conn.close();
