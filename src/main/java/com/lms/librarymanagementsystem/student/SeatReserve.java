@@ -21,7 +21,6 @@ public class SeatReserve extends javax.swing.JFrame {
     initComponents();
     connect();
 
-    // Initialize seats if table is empty
     initializeSeats();
 
     if (!isStudent(studentId)) {
@@ -38,17 +37,16 @@ public class SeatReserve extends javax.swing.JFrame {
     startAutoRefresh();
 }
      
-     
-    /* ================= BOOK SEAT ================= */
+  
 
    private void bookSeat() {
     int seatNo = Integer.parseInt(jComboBox1.getSelectedItem().toString());
 
     try {
-        // First free any expired seats
+    
         freeExpiredSeats();
         
-        // Check if student already has an active seat
+     
         String check = "SELECT 1 FROM seat_reservation WHERE student_id=? AND time_out > NOW()";
         PreparedStatement pst = conn.prepareStatement(check);
         pst.setInt(1, studentId);
@@ -71,13 +69,12 @@ public class SeatReserve extends javax.swing.JFrame {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime out = now.plusHours(2);
 
-        // If seat exists but expired, update it
         check = "SELECT 1 FROM seat_reservation WHERE seat_no=?";
         pst = conn.prepareStatement(check);
         pst.setInt(1, seatNo);
         
         if (pst.executeQuery().next()) {
-            // Update existing seat (was expired)
+   
             String update = "UPDATE seat_reservation SET status='OCCUPIED', time_in=?, time_out=?, student_id=? WHERE seat_no=?";
             pst = conn.prepareStatement(update);
             pst.setTimestamp(1, Timestamp.valueOf(now));
@@ -126,12 +123,11 @@ public void dispose() {
 
  
     private void startAutoRefresh() {
-    refreshTimer = new Timer(60000, e -> { // Refresh every minute (60,000 milliseconds)
+    refreshTimer = new Timer(60000, e -> { 
         try {
-            // Free expired seats first
+          
             freeExpiredSeats();
-            
-            // Then refresh both tables
+           
             loadSeatStatus();
             loadMySeat();
         } catch (Exception ex) {
@@ -140,7 +136,6 @@ public void dispose() {
     });
     refreshTimer.start();
 }
-    /* ================= DATABASE ================= */
 
     private void connect() {
         try {
@@ -174,10 +169,8 @@ public void dispose() {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         
-        // First free any expired seats
         freeExpiredSeats();
 
-        // Only show seats that are currently OCCUPIED
         String sql = "SELECT seat_no, status, time_out, student_id FROM seat_reservation WHERE status = 'OCCUPIED'";
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
@@ -212,7 +205,6 @@ public void dispose() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
-        // Only show seats that are currently OCCUPIED by this student
         String sql = "SELECT seat_no, time_in, time_out FROM seat_reservation WHERE student_id=? AND status='OCCUPIED'";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, studentId);
@@ -247,13 +239,12 @@ public void dispose() {
 
  private void initializeSeats() {
     try {
-        // Check if seats are initialized
+        
         String checkSql = "SELECT COUNT(*) as count FROM seat_reservation";
         PreparedStatement checkPst = conn.prepareStatement(checkSql);
         ResultSet rs = checkPst.executeQuery();
         
         if (rs.next() && rs.getInt("count") == 0) {
-            // Initialize 30 seats
             String insertSql = "INSERT INTO seat_reservation (seat_no, status) VALUES (?, 'FREE')";
             PreparedStatement insertPst = conn.prepareStatement(insertSql);
             
@@ -271,7 +262,7 @@ public void dispose() {
  
  private boolean isStudent(int userId) {
     try {
-        // First check if it's a valid user
+   
         String checkUserSql = "SELECT user_id FROM users WHERE user_id=?";
         PreparedStatement checkUserPst = conn.prepareStatement(checkUserSql);
         checkUserPst.setInt(1, userId);
@@ -282,7 +273,6 @@ public void dispose() {
             return false;
         }
         
-        // Now check if they're a student
         String sql = "SELECT s.student_id FROM student s WHERE s.user_id=?";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, userId);
