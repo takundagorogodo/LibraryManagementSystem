@@ -4,7 +4,6 @@
  */
 package com.lms.librarymanagementsystem.student;
 
-// Remove the duplicate JScrollPane code at the top - that's a system class!
 import com.lms.librarymanagementsystem.student.MainStudent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,16 +17,16 @@ public class SearchBooksStudent extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(SearchBooksStudent.class.getName());
 
-    // ================== ROLE CONTEXT ==================
-    private String userRole; // "FACULTY" or "STUDENT"
+  
+    private String userRole; 
     private int userId;
 
-    // ================== DATABASE ==================
+ 
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
 
-    // ================== CONSTRUCTORS ==================
+   
     public SearchBooksStudent(String userRole, int userId) {
         this.userRole = userRole;
         this.userId = userId;
@@ -35,12 +34,11 @@ public class SearchBooksStudent extends javax.swing.JFrame {
         connect();
     }
 
-    // Default constructor (used only for testing)
+  
     public SearchBooksStudent() {
         this("STUDENT", 1); // Default for testing
     }
 
-    // ================== DATABASE CONNECTION ==================
     private void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -54,7 +52,6 @@ public class SearchBooksStudent extends javax.swing.JFrame {
         }
     }
 
-    // ================== SEARCH BOOKS ==================
     private void searchBooks() {
         String title = jTextField2.getText().trim();
         String department = jComboBox1.getSelectedItem().toString();
