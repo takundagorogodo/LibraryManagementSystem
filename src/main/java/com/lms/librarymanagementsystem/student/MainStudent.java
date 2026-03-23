@@ -195,7 +195,7 @@ if (choice == JOptionPane.YES_OPTION) {
             "1234"
         );
         
-        // Since studentId = 127, and this works, it's likely the user_id
+        
         // Check if this user_id exists with the given password
         pst = conn.prepareStatement(
             "SELECT user_id FROM users WHERE user_id = ? AND password = ?"
@@ -296,9 +296,7 @@ if (choice == JOptionPane.YES_OPTION) {
         }
     });
 }
-    /**
-     * @param args the command line arguments
-     */
+   
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton10;
