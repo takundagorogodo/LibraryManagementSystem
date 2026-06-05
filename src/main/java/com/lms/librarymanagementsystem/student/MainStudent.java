@@ -167,8 +167,6 @@ if (choice == JOptionPane.YES_OPTION) {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
                                       
-                                    
-    // Step 1: Ask for current password
     String currentPassword = JOptionPane.showInputDialog(
         this, 
         "Enter your current password:",
@@ -181,13 +179,11 @@ if (choice == JOptionPane.YES_OPTION) {
         return;
     }
     
-    // Step 2: Verify current password
     try {
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         
-        // Connect to database
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/library_db?useSSL=false&serverTimezone=UTC",
@@ -195,8 +191,6 @@ if (choice == JOptionPane.YES_OPTION) {
             "1234"
         );
         
-        
-        // Check if this user_id exists with the given password
         pst = conn.prepareStatement(
             "SELECT user_id FROM users WHERE user_id = ? AND password = ?"
         );
@@ -214,7 +208,6 @@ if (choice == JOptionPane.YES_OPTION) {
             return;
         }
         
-        // Step 3: Ask for new password
         String newPassword = JOptionPane.showInputDialog(
             this, 
             "Enter new password:",
@@ -227,7 +220,6 @@ if (choice == JOptionPane.YES_OPTION) {
             return;
         }
         
-        // Step 4: Confirm new password
         String confirmPassword = JOptionPane.showInputDialog(
             this, 
             "Confirm new password:",
@@ -245,7 +237,6 @@ if (choice == JOptionPane.YES_OPTION) {
             return;
         }
         
-        // Step 5: Update password in users table
         pst = conn.prepareStatement(
             "UPDATE users SET password = ? WHERE user_id = ?"
         );
