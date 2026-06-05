@@ -45,7 +45,6 @@ public class SeatReserve extends javax.swing.JFrame {
     try {
     
         freeExpiredSeats();
-        
      
         String check = "SELECT 1 FROM seat_reservation WHERE student_id=? AND time_out > NOW()";
         PreparedStatement pst = conn.prepareStatement(check);
@@ -56,7 +55,6 @@ public class SeatReserve extends javax.swing.JFrame {
             return;
         }
 
-        // Check if seat is currently occupied (not expired)
         check = "SELECT 1 FROM seat_reservation WHERE seat_no=? AND time_out > NOW()";
         pst = conn.prepareStatement(check);
         pst.setInt(1, seatNo);
@@ -83,7 +81,7 @@ public class SeatReserve extends javax.swing.JFrame {
             pst.setInt(4, seatNo);
             pst.executeUpdate();
         } else {
-            // Insert new seat
+            
             String insert = "INSERT INTO seat_reservation (seat_no, status, time_in, time_out, student_id) VALUES (?,?,?,?,?)";
             pst = conn.prepareStatement(insert);
             pst.setInt(1, seatNo);
@@ -278,7 +276,7 @@ public void dispose() {
         pst.setInt(1, userId);
         ResultSet rs = pst.executeQuery();
 
-        return rs.next(); // Returns true if they exist in student table
+        return rs.next(); 
     } catch (SQLException e) {
         e.printStackTrace();
         return false;
