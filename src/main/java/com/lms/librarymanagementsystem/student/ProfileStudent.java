@@ -20,15 +20,13 @@ public class ProfileStudent extends javax.swing.JFrame {
 
     private int userId;
 
-    // ================= CONSTRUCTOR =================
   public ProfileStudent(int userId) {
     initComponents();
     makeFieldsReadOnly();
     connect();
-    loadStudentProfile(userId); // Pass userId instead
+    loadStudentProfile(userId); 
 }
 
-    // ================= DB CONNECTION =================
     private void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -42,21 +40,19 @@ public class ProfileStudent extends javax.swing.JFrame {
         }
     }
 
-    // ================= READ ONLY =================
+
     private void makeFieldsReadOnly() {
-        jTextField2.setEditable(false); // Student ID
-        jTextField7.setEditable(false); // Name
-        jTextField4.setEditable(false); // Department
-        jTextField5.setEditable(false); // Fine
-        jTextField6.setEditable(false); // Seat Number
-        jTextField8.setEditable(false); // Issued Books Count
+        jTextField2.setEditable(false); 
+        jTextField7.setEditable(false); 
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField8.setEditable(false);
     }
 
-    // ================= LOAD PROFILE =================
- 
 private void loadStudentProfile(int userId) {
     try {
-        // BASIC DETAILS - Get student_id from user_id
+        
         pst = conn.prepareStatement(
             "SELECT s.student_id, u.full_name, u.department " +
             "FROM student s " +
@@ -72,7 +68,6 @@ private void loadStudentProfile(int userId) {
             jTextField7.setText(rs.getString("full_name"));
             jTextField4.setText(rs.getString("department"));
             
-            // Store studentId for other queries
             this.userId = studentId;
         } else {
             JOptionPane.showMessageDialog(this, "Student not found! Make sure you're logged in as a student.");
@@ -81,12 +76,11 @@ private void loadStudentProfile(int userId) {
         rs.close();
         pst.close();
 
-        // ISSUED BOOK COUNT - using user_id directly
-        pst = conn.prepareStatement(
+         pst = conn.prepareStatement(
             "SELECT COUNT(*) FROM book_issue " +
             "WHERE user_id = ? AND return_date IS NULL"
         );
-        pst.setInt(1, userId); // Use userId, not studentId
+        pst.setInt(1, userId); 
         rs = pst.executeQuery();
 
         if (rs.next()) {
@@ -97,14 +91,13 @@ private void loadStudentProfile(int userId) {
         rs.close();
         pst.close();
 
-        // CURRENT FINE (₹5 PER DAY)
         pst = conn.prepareStatement(
             "SELECT IFNULL(SUM(DATEDIFF(CURDATE(), due_date) * 5), 0) as total_fine " +
             "FROM book_issue " +
             "WHERE user_id = ? " +
             "AND return_date IS NULL AND due_date < CURDATE()"
         );
-        pst.setInt(1, userId); // Use userId, not studentId
+        pst.setInt(1, userId); 
         rs = pst.executeQuery();
 
         if (rs.next()) {
@@ -115,12 +108,11 @@ private void loadStudentProfile(int userId) {
         rs.close();
         pst.close();
 
-        // SEAT RESERVED - using studentId we got from the first query
         pst = conn.prepareStatement(
             "SELECT seat_no FROM seat_reservation " +
             "WHERE student_id = ? AND status = 'OCCUPIED'"
         );
-        pst.setInt(1, this.userId); // Use the studentId we found
+        pst.setInt(1, this.userId); 
         rs = pst.executeQuery();
 
         if (rs.next()) {
@@ -135,12 +127,12 @@ private void loadStudentProfile(int userId) {
         JOptionPane.showMessageDialog(this, "Error loading student profile: " + e.getMessage());
         e.printStackTrace();
     } finally {
-        // Clean up resources
+        
         try {
             if (rs != null) rs.close();
             if (pst != null) pst.close();
         } catch (Exception e) {
-            // Ignore cleanup errors
+            
         }
     }
 }
