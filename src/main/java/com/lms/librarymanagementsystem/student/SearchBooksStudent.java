@@ -16,12 +16,10 @@ public class SearchBooksStudent extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(SearchBooksStudent.class.getName());
-
   
     private String userRole; 
     private int userId;
 
- 
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
@@ -33,10 +31,9 @@ public class SearchBooksStudent extends javax.swing.JFrame {
         initComponents();
         connect();
     }
-
   
     public SearchBooksStudent() {
-        this("STUDENT", 1); // Default for testing
+        this("STUDENT", 1); 
     }
 
     private void connect() {
@@ -134,7 +131,7 @@ public class SearchBooksStudent extends javax.swing.JFrame {
         jToggleButton1.setText("Search");
         jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); 
         jLabel2.setText("BOOKS AVAILABLE");
 
         jLabel4.setText("Title");
